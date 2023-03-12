@@ -1,0 +1,71 @@
+$grid-gutter-width: 20
+$grid-gutter-width2: 20px
+$max-width: 1186
+$columns: 28
+$size: $max-width / $columns
+
+
+.container
+  position: relative
+  margin: 0 auto
+  padding-left: 90px
+  padding-right: 90px
+  max-width: 1366px
+
+.table__title-row,
+.table__body-row
+  display: flex
+  justify-content: space-between
+
+.col
+  width: 100%
+  min-height: 1px
+  padding-left: ($grid-gutter-width2 / 2)
+  padding-right: ($grid-gutter-width2 / 2)
+  //background-color: #ef8e8e
+
+.col:first-child
+  padding-left: 20px
+
+.col:last-child
+  padding-right: 20px
+
+.col-2
+  flex: 0 0 auto
+  max-width: percentage(($size)*2/$max-width)
+
+.col-8-5
+  flex: 0 0 auto
+  max-width: percentage(($size)*8.5/$max-width)
+
+.col-4-5
+  flex: 0 0 auto
+  max-width: percentage(($size)*4.5/$max-width)
+
+.col-4
+  flex: 0 0 auto
+  max-width: percentage(($size)*4/$max-width)
+
+.col-5
+  flex: 0 0 auto
+  max-width: percentage(($size)*5/$max-width)
+
+
+
+@media only screen and (max-width : 1280px)
+
+  .col-8-5
+    max-width: percentage(($size)*8/$max-width)
+  .col-5
+    max-width: percentage(($size)*5.5/$max-width)
+
+
+@media only screen and (max-width : 998px)
+  .col-4-5
+    max-width: percentage(($size)*4/$max-width)
+
+  .col-2
+    max-width: percentage(($size)*3/$max-width)
+
+  .col-5
+    max-width: percentage(($size)*5/$max-width)

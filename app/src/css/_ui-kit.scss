@@ -1,0 +1,171 @@
+@import "vars";
+
+.btn {
+  transition: color .3s ease-in-out, border-color .3s ease-in-out;
+}
+
+path {
+  transition: fill .3s ease-in-out;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: $hover-color;
+}
+
+.btn-primary:active {
+  background-color: #8052FF;
+}
+.btn-primary:disabled {
+  background-color: $grey-border;
+}
+
+
+.btn-second:hover,
+.btn-second:focus {
+  background-color: $hover-color;
+  color: #fff;
+}
+
+.btn-second:hover path,
+.btn-second:focus path {
+  fill: #ffffff;
+}
+
+.btn-second:active {
+  background-color: #8052FF;
+  color: #fff;
+
+}
+.btn-second:disabled {
+  border-color: $grey-border;
+  color: $grey-border;
+}
+
+.form__link.link-cancel:hover,
+.form__link.link-cancel:focus,
+.link-cancel:hover,
+.link-cancel:focus {
+  border-bottom: 1px solid $delete-color;
+}
+
+.form__link.link-cancel:active,
+.link-cancel:active {
+  border-bottom: 1px solid $delete-color;
+  color: $delete-color;
+}
+
+.modal .modal__close:hover::after,
+.modal .modal__close:focus::after,
+.modal .modal__close:hover::before,
+.modal .modal__close:focus::before  {
+  background-color: $delete-color;
+}
+
+.modal .modal__close:active::after,
+.modal .modal__close:active::before {
+  background-color: #fff;
+}
+
+.form__link.link:hover,
+.form__link.link:focus {
+  background-image: url("../img/add2.svg");
+  color: $accent-color;
+}
+
+
+.form__link.link:active{
+  color: $active-color;
+}
+
+.link__add.add1{
+
+}
+
+
+.form__link.link:hover .add2
+.form__link.link:focus .add2  {
+}
+
+.form .btn-delete:hover,
+.form .btn-delete:focus {
+  border: 1px solid $delete-color;
+}
+.btn-delete:hover .btn-delete-icon path,
+.btn-delete:focus .btn-delete-icon path {
+  fill: $delete-color;
+}
+
+
+.action__change:hover,
+.action__change:focus {
+  color: $accent-color;
+}
+
+.action__change:active .action__change-icon path,
+.action__change:active .action__change-icon path{
+  opacity: 0;
+}
+
+.action__change:active .action__change-icon,
+.action__change:active .action__change-icon {
+  border: 2px solid transparent;
+  border-top:2px solid $accent-color;
+  border-right:2px solid $accent-color;
+  border-bottom:2px solid $accent-color;
+  border-radius: 100%;
+
+  position: relative;
+  top:0;
+  bottom:0;
+  left:0;
+  right: 0;
+  margin: auto;
+
+  animation: load .3s infinite linear;
+}
+
+
+.action__delete:hover,
+.action__delete:focus {
+  color: $delete-color;
+}
+
+.spinner{
+  width: 80px;
+  height: 80px;
+
+  border: 2px solid #f3f3f3;
+  border-top:3px solid #f25a41;
+  border-radius: 100%;
+
+  position: absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right: 0;
+  margin: auto;
+
+  animation: load 1s infinite linear;
+}
+
+
+@keyframes load {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

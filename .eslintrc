@@ -1,0 +1,28 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true
+  },
+  "ignorePatterns": ["choices.js", "simplebar.css", "simplebar.min.js", "jquery.js", "jquery-ui.min.js", "inputmask.min.js", "just-validate.min.js", "ymaps.js"],
+  "rules": {
+    "semi": "off",
+    "linebreak-style": "off",
+    "require-jsdoc": "off",
+    "arrow-parens": "off",
+    "new-cap": "off",
+    "comma-dangle": "off",
+    "operator-linebreak": "off",
+    "quotes": "off",
+    "padded-blocks": "off",
+    "no-multiple-empty-lines": "off",
+    "max-len": "off",
+    "no-debugger": "off",
+    "no-invalid-this": "off",
+  },
+  "extends": [
+    "eslint:recommended",
+    "google"
+  ]
+}
