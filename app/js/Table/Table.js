@@ -53,7 +53,18 @@ export class Table extends DomComponents {
     document.querySelectorAll('.action__change').forEach(link => {
       link.addEventListener('click', (e) => {
         const changeForm = modals()
-        changeForm.changeUser()
+        const id = e.target.dataset.rowid
+        const client = this.data.find(item => item.id == id )
+
+        changeForm.changeUser(client).on('click', function(e) {
+          e.preventDefault()
+          if (e.target == $('.modal__close').$el || e.target == $('.main__modal').$el) changeForm.close()
+
+          if (e.target == $('.btn-primary').$el) {
+            getUserData()
+            //  добавить соответственно changeForm.close() и ответ сервера как описано в ТЗ.
+          }
+        })
       })
     })
 

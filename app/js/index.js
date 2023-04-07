@@ -19,7 +19,7 @@ const arr = [
     surname: 'Скворцов',
     createData: new Date(),
     changeData: new Date(),
-    contacts: [{type: "vk", value: "12"}, {type: "fb", value: "12"}, {type: "mail", value: "12"}, {type: "tel", value: "12"}]
+    contacts: [{type: "vk", value: "12"}, {type: "fb", value: "12"}, {type: "mail", value: "12"}, {type: "phone", value: "12"}, {type: "other", value: "12"}]
   },
   {
     id: '222222',

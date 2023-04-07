@@ -49,8 +49,7 @@ export function generateRow(obj) {
 }
 
 
-export function getContact(obj =[]) {
-  // data-tippy-content=""
+function getContact(obj =[]) {
   const td = document.createElement('td')
   td.classList.add('table__body-row-contacts')
   td.classList.add('col')
