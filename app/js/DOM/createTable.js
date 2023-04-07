@@ -26,20 +26,20 @@ export function generateRow(obj) {
         </a>
       </td>`
   const name = `
-      <td class="table__body-row-name col col-8-5">${obj.surname} ${obj.name} ${obj.secondName}</td>
+      <td class="table__body-row-name col col-8-5">${obj.surname} ${obj.name} ${obj.lastName}</td>
      `
-  const createData = `
-      <td class="table__body-row-create col col-4-5">${getData(obj.createData)} <span class="time">${getTime(obj.createData)}</span></td>
+  const createdAt = `
+      <td class="table__body-row-create col col-4-5">${getData(obj.createdAt)} <span class="time">${getTime(obj.createdAt)}</span></td>
      `
-  const changeData = `
-      <td class="table__body-row-change col col-4">${getData(obj.changeData)} <span class="time">${getTime(obj.createData)}</span></td>
+  const updatedAt = `
+      <td class="table__body-row-change col col-4">${getData(obj.updatedAt)} <span class="time">${getTime(obj.createdAt)}</span></td>
      `
 
 
   tr.insertAdjacentHTML("beforeend", tdId)
   tr.insertAdjacentHTML("beforeend", name)
-  tr.insertAdjacentHTML("beforeend", createData)
-  tr.insertAdjacentHTML("beforeend", changeData)
+  tr.insertAdjacentHTML("beforeend", createdAt)
+  tr.insertAdjacentHTML("beforeend", updatedAt)
   tr.append(getContact(obj))
   tr.insertAdjacentHTML("beforeend", tdBtn)
 
@@ -64,7 +64,8 @@ function getContact(obj =[]) {
 }
 
 
-function getData(data) {
+function getData(objDate) {
+  const data = new Date(objDate)
   const y = data.getFullYear()
   let m = data.getMonth()
   let d = data.getDate()
@@ -77,7 +78,8 @@ function getData(data) {
   return d + '.' + m + '.' + y
 }
 
-function getTime(data) {
+function getTime(objDate) {
+  const data = new Date(objDate)
   let m = data.getMinutes()
   let s = data.getSeconds()
   if (m < 10) {

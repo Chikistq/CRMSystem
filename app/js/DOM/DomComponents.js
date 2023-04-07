@@ -1,5 +1,9 @@
 import {$} from '@/js/DOM/dom';
 import {preloader, showRow} from '@/js/DOM/_elements';
+import {Exchange} from '@/js/API/Exchange';
+import tippy from 'tippy.js';
+import 'tippy.js/dist/tippy.css';
+
 
 
 
@@ -9,7 +13,7 @@ export class DomComponents {
   constructor(options = {}) {
     this.$selector = $(options.selector)
     this.componets = options.components || []
-    this.data = options.data || []
+    this.exchange = new Exchange || []
   }
 
   listeners() {
@@ -23,37 +27,34 @@ export class DomComponents {
   }
 
 
-  init() {
+  async init() {
     this.$selector.html(preloader)
 
-    // setTimeout(() => {
-    //   $('.table__wrap-preload').removeClass('active')
-    //
-    //   this.componets = this.componets.map(Component => {
-    //     const component = new Component(this.data)
-    //     this.$selector.append(component.render())
-    //
-    //     if (component.name === 'Table') {
-    //       showRow(this.data)
-    //     }
-    //     return component
-    //   })
-    //
-    // }, 1500)
+    await this.exchange.getData()
+    console.log(this.exchange)
 
-    $('.table__wrap-preload').removeClass('active')
+    if (this.exchange.response == '200') {
+      $('.table__wrap-preload').removeClass('active')
 
-    this.componets = this.componets.map(Component => {
-      const component = new Component(this.data)
-      this.$selector.append(component.render())
+      this.componets = this.componets.map(Component => {
+        const component = new Component(this.exchange.data)
+        this.$selector.append(component.render())
 
-      if (component.name === 'Table') {
-        showRow(this.data)
-      }
-      return component
-    })
+        if (component.name === 'Table') {
+          showRow(this.exchange.data)
+        }
+        return component
+      })
 
-    this.componets.forEach(component => component.listeners())
+      this.componets.forEach(component => component.listeners())
+
+
+      tippy('[data-tippy-content]', {
+        theme: 'custom',
+      })
+    }
+
+
 
   }
 }

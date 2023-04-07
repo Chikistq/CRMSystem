@@ -111,9 +111,9 @@ const newUser = `
             <input class="form__input user-name" id="name" type="text" placeholder="Имя*" data-validate-field="name" name="user_name">
           </label>
 
-          <label class="form__label" for="secondName">
+          <label class="form__label" for="lastName">
             <span class="visually-hidden">Введите отчество</span>
-            <input class="form__input user-lastName" id="secondName" type="text" placeholder="Отчество" data-validate-field="secondName" name="user_secondName">
+            <input class="form__input user-lastName" id="lastName" type="text" placeholder="Отчество" data-validate-field="lastName" name="user_lastName">
           </label>
         </div>
 
@@ -151,9 +151,9 @@ function changeUser(obj = {}) {
             <input class="form__input user-name" id="changeName" type="text" placeholder="" data-validate-field="name" name="user_name" value="${obj.name}">
           </label>
 
-          <label class="form__label" for="changeSecondName">
+          <label class="form__label" for="changelastName">
             <span class="">Отчество</span>
-            <input class="form__input user-lastName" id="changeSecondName" type="text" placeholder="" data-validate-field="secondName" name="user_secondName" value="${obj.secondName}">
+            <input class="form__input user-lastName" id="changelastName" type="text" placeholder="" data-validate-field="lastName" name="user_lastName" value="${obj.lastName}">
           </label>
         </div>
 

@@ -91,15 +91,6 @@ path {
   color: $active-color;
 }
 
-.link__add.add1{
-
-}
-
-
-.form__link.link:hover .add2
-.form__link.link:focus .add2  {
-}
-
 .form .btn-delete:hover,
 .form .btn-delete:focus {
   border: 1px solid $delete-color;
@@ -109,18 +100,15 @@ path {
   fill: $delete-color;
 }
 
-
 .action__change:hover,
 .action__change:focus {
   color: $accent-color;
 }
 
-.action__change:active .action__change-icon path,
-.action__change:active .action__change-icon path{
+.action__change:active .action__change-icon path {
   opacity: 0;
 }
 
-.action__change:active .action__change-icon,
 .action__change:active .action__change-icon {
   border: 2px solid transparent;
   border-top:2px solid $accent-color;
@@ -135,7 +123,7 @@ path {
   right: 0;
   margin: auto;
 
-  animation: load .3s infinite linear;
+  animation: load .3s linear;
 }
 
 
@@ -144,23 +132,23 @@ path {
   color: $delete-color;
 }
 
-.spinner{
-  width: 80px;
-  height: 80px;
-
-  border: 2px solid #f3f3f3;
-  border-top:3px solid #f25a41;
-  border-radius: 100%;
-
-  position: absolute;
-  top:0;
-  bottom:0;
-  left:0;
-  right: 0;
-  margin: auto;
-
-  animation: load 1s infinite linear;
-}
+//.spinner{
+//  width: 80px;
+//  height: 80px;
+//
+//  border: 2px solid #f3f3f3;
+//  border-top:3px solid #f25a41;
+//  border-radius: 100%;
+//
+//  position: absolute;
+//  top:0;
+//  bottom:0;
+//  left:0;
+//  right: 0;
+//  margin: auto;
+//
+//  animation: load 1s infinite linear;
+//}
 
 
 @keyframes load {
