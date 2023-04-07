@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable */
 // импорт стандартных библиотек Node.js
 const { existsSync, readFileSync, writeFileSync } = require('fs');
 const { createServer } = require('http');
@@ -102,7 +102,7 @@ function getClientList(params = {}) {
  * @param {Object} data - Данные из тела запроса
  * @returns {{ id: string, name: string, surname: string, lastName: string, contacts: object[], createdAt: string, updatedAt: string }} Объект клиента
  */
-function createClient(data) {
+export function createClient(data) {
   const newItem = makeClientFromData(data);
   newItem.id = Date.now().toString();
   newItem.createdAt = newItem.updatedAt = new Date().toISOString();

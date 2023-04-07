@@ -1,5 +1,50 @@
 import {$} from '@/js/DOM/dom';
 import Choices from 'choices.js';
+import tippy from 'tippy.js';
+
+function addContact(obj = []) {
+  const contact = `
+          <div class="form__contacts-items item">
+            <select class="item__select" name="type" >
+              <option value="phone">Телефон</option>
+              <option value="mail">Email</option>
+              <option value="vk">Vk</option>
+              <option value="fb">Facebook</option>
+              <option value="other">Другое</option>
+            </select>
+
+            <label class="item__data" for="data">
+              <span class="visually-hidden">Введите контакт</span>
+              <input class="item__data-input" id="data" type="text" placeholder="Введите данные контакта" data-validate-field="data" name="data">
+            </label>
+            <button class="item__btn btn btn-delete tooltip" data-tippy-content="Удалить контакт">
+              <svg class="btn-delete-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 0C2.682 0 0 2.682 0 6C0 9.318 2.682 12 6 12C9.318 12 12 9.318 12 6C12 2.682 9.318 0 6 0ZM6 10.8C3.354 10.8 1.2 8.646 1.2 6C1.2 3.354 3.354 1.2 6 1.2C8.646 1.2 10.8 3.354 10.8 6C10.8 8.646 8.646 10.8 6 10.8ZM8.154 3L6 5.154L3.846 3L3 3.846L5.154 6L3 8.154L3.846 9L6 6.846L8.154 9L9 8.154L6.846 6L9 3.846L8.154 3Z" fill="#F06A4D"/>
+              </svg>
+            </button>
+          </div>
+`
+  const linkAdd = $('.link-add')
+
+  linkAdd.on('click', (e) => {
+    e.preventDefault()
+    linkAdd.appendHtml('beforebegin', contact)
+    reloadChoices()
+    const items = document.querySelectorAll('.item')
+
+    if (items.length > 9) {
+      linkAdd.remove()
+    }
+    Array.from(document.querySelectorAll('.btn-delete')).map((item, value) => {
+      item.addEventListener('click', (e) => {
+        items[value].remove()
+      })
+    })
+  })
+
+}
+
+
 
 const newUser = `
      <div class="modal__newUser  ">
@@ -27,47 +72,7 @@ const newUser = `
         </div>
 
         <div class="form__contacts form__contacts-pd25">
-          <div class="form__contacts-items item active">
-            <select class="item__select" name="type" >
-              <option value="tel">Телефон</option>
-              <option value="sec-tel">Доп. телефон</option>
-              <option value="Email">Email</option>
-              <option value="Vk">Vk</option>
-              <option value="Facebook">Facebook</option>
-            </select>
-
-            <label class="item__data" for="data">
-              <span class="visually-hidden">Введите контакт</span>
-              <input class="item__data-input" id="data" type="text" placeholder="Введите данные контакта" data-validate-field="data" name="data">
-            </label>
-            <button class="item__btn btn btn-delete tooltip" data-tippy-content="Удалить контакт">
-              <svg class="btn-delete-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 0C2.682 0 0 2.682 0 6C0 9.318 2.682 12 6 12C9.318 12 12 9.318 12 6C12 2.682 9.318 0 6 0ZM6 10.8C3.354 10.8 1.2 8.646 1.2 6C1.2 3.354 3.354 1.2 6 1.2C8.646 1.2 10.8 3.354 10.8 6C10.8 8.646 8.646 10.8 6 10.8ZM8.154 3L6 5.154L3.846 3L3 3.846L5.154 6L3 8.154L3.846 9L6 6.846L8.154 9L9 8.154L6.846 6L9 3.846L8.154 3Z" fill="#F06A4D"/>
-              </svg>
-            </button>
-          </div>
-          <div class="form__contacts-items item active">
-            <select class="item__select" name="type" >
-              <option value="tel">Телефон</option>
-              <option value="sec-tel">Доп. телефон</option>
-              <option value="Email">Email</option>
-              <option value="Vk">Vk</option>
-              <option value="Facebook">Facebook</option>
-            </select>
-
-            <label class="item__data" for="data">
-              <span class="visually-hidden">Введите контакт</span>
-              <input class="item__data-input" id="data" type="text" placeholder="Введите данные контакта" data-validate-field="data" name="data">
-            </label>
-            <button class="item__btn btn btn-delete tooltip" data-tippy-content="Удалить контакт">
-              <svg class="btn-delete-icon" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 0C2.682 0 0 2.682 0 6C0 9.318 2.682 12 6 12C9.318 12 12 9.318 12 6C12 2.682 9.318 0 6 0ZM6 10.8C3.354 10.8 1.2 8.646 1.2 6C1.2 3.354 3.354 1.2 6 1.2C8.646 1.2 10.8 3.354 10.8 6C10.8 8.646 8.646 10.8 6 10.8ZM8.154 3L6 5.154L3.846 3L3 3.846L5.154 6L3 8.154L3.846 9L6 6.846L8.154 9L9 8.154L6.846 6L9 3.846L8.154 3Z" fill="#F06A4D"/>
-              </svg>
-            </button>
-          </div>
-
-
-          <a class="form__link link" href="\\">Добавить контакт</a>
+          <a class="form__link link link-add" href="\\">Добавить контакт</a>
         </div>
       </form>
 
@@ -76,7 +81,10 @@ const newUser = `
 
     </div>
 `
-const changeUser = `
+
+function changeUser(obj = {}) {
+
+  return `
      <div class="modal__changeUser ">
       <button class="modal__close"></button>
 
@@ -146,7 +154,7 @@ const changeUser = `
           </div>
 
 
-          <a class="form__link link" href="\\">Добавить контакт</a>
+          <a class="form__link link link-add" href="\\">Добавить контакт</a>
         </div>
 
       </form>
@@ -158,6 +166,8 @@ const changeUser = `
 
     </div>
 `
+}
+
 const deleteUser = `
     <div class="modal__deleteUser ">
       <button class="modal__close"></button>
@@ -179,6 +189,7 @@ function reloadChoices() {
       new Choices(item, {
         searchEnabled: false,
         itemSelectText: '',
+        allowHTML: true,
       })
     })
   }
@@ -198,17 +209,19 @@ export function modals() {
       modal.classList.add('active')
       main.append(modal)
 
-      reloadChoices()
+      addContact()
+
+      return $(modal)
 
     },
     changeUser() {
-      modal.insertAdjacentHTML("beforeend", changeUser)
+      modal.insertAdjacentHTML("beforeend", changeUser())
       modal.classList.add('active')
       main.append(modal)
-
       reloadChoices()
+
     },
-    deleteUser() {
+    deleteUser(id) {
       modal.insertAdjacentHTML("beforeend", deleteUser)
       modal.classList.add('active')
       main.append(modal)

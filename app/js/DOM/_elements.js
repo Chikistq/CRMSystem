@@ -12,3 +12,18 @@ export function showRow(cl) {
   })
 
 }
+
+export function getUserData() {
+  const newUser = {}
+  newUser.contacts = []
+  Array.from(document.querySelectorAll('[class*="user-"]')).map((item) => {
+    newUser[item.id] = item.value
+  })
+  Array.from(document.querySelectorAll('.item__select')).map((item, value) => {
+    const contact = {}
+    contact[item.value] = Array.from(document.querySelectorAll('.item__data-input'))[value].value
+    newUser.contacts.push(contact)
+  })
+
+  return newUser
+}

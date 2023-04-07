@@ -255,9 +255,12 @@
       position: relative;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      //justify-content: center;
+      margin-top: 50px;
+      margin-bottom: 50px;
       min-width: 450px;
       background-color: #fff;
+      overflow-y: auto;
 
       &-wrap {
         display: flex;

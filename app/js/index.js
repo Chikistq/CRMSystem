@@ -7,22 +7,7 @@ import '@css/media.scss'
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css';
 import {Table} from '@/js/Table/Table';
-import {$} from '@/js/DOM/dom';
-import {modals} from '@/js/DOM/_modals';
 import {DomComponents} from '@/js/DOM/DomComponents';
-import {Data} from '@/js/Data/Data';
-
-
-
-
-
-const link = document.querySelectorAll('.a-link')
-
-link.forEach(item => {
-  item.addEventListener('click', function(e) {
-    e.preventDefault()
-  })
-})
 
 
 
@@ -34,7 +19,7 @@ const arr = [
     surname: 'Скворцов',
     createData: new Date(),
     changeData: new Date(),
-    contacts: [{type: "vk", value: "12"}, {type: "fb", value: "12"}, {type: "mail", value: "12"}]
+    contacts: [{type: "vk", value: "12"}, {type: "fb", value: "12"}, {type: "mail", value: "12"}, {type: "tel", value: "12"}]
   },
   {
     id: '222222',
@@ -68,12 +53,6 @@ const crm = new DomComponents({
 crm.init()
 
 
-
-
-$('.main__addbtn').on('click', () => {
-  modals().newUser()
-  console.log('test')
-})
 
 tippy('[data-tippy-content]', {
   theme: 'custom',

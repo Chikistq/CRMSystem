@@ -1,8 +1,8 @@
-import {preloader} from '@/js/DOM/_elements';
 import {$} from '@/js/DOM/dom';
 import {generateRow} from '@/js/DOM/createTable';
 import {DomComponents} from '@/js/DOM/DomComponents';
 import {modals} from '@/js/DOM/_modals';
+import {getUserData} from '@/js/DOM/_elements';
 
 
 
@@ -30,7 +30,40 @@ export class Table extends DomComponents {
     return table
   }
 
+  listeners() {
+    super.listeners()
 
+    /* Add new Client */
+    $('.main__addbtn').on('click', () => {
+      const newClform = modals()
+      newClform.newUser().on('click', function(e) {
+        e.preventDefault()
+        if (e.target == $('.modal__close').$el || e.target == $('.link-cancel').$el || e.target == $('.main__modal').$el) newClform.close()
+
+        if (e.target == $('.btn-primary').$el) {
+          getUserData()
+        //  добавить соответственно newClform.close() и ответ сервера как описано в ТЗ.
+        }
+      })
+    })
+    /* Add new Client end */
+
+
+    /* change Client */
+    document.querySelectorAll('.action__change').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const changeForm = modals()
+        changeForm.changeUser()
+      })
+    })
+
+
+    /* change Client  end */
+
+
+
+
+  }
 
   /* после добавления слушателей событий, добавить механизм
   * 1) по клику на изменить/удалить - открытие модалок.

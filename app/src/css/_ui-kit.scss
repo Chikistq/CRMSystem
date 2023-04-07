@@ -49,6 +49,19 @@ path {
   border-bottom: 1px solid $delete-color;
 }
 
+.main .modal .modal__close:hover::after,
+.main .modal .modal__close:hover::before,
+.main .modal .modal__close:focus::after,
+.main .modal .modal__close:focus::before {
+  background-color: $delete-color;
+}
+
+.main .modal .modal__close:active::after,
+.main .modal .modal__close:active::before {
+  background-color: $grey-border;
+}
+
+
 .form__link.link-cancel:active,
 .link-cancel:active {
   border-bottom: 1px solid $delete-color;

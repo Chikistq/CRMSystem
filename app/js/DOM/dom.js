@@ -35,6 +35,11 @@ class Dom {
     return this
   }
 
+  appendHtml(where, html) {
+    this.$el.insertAdjacentHTML(where, html)
+    return this
+  }
+
   get data() {
     return this.$el.dataset
   }
@@ -70,6 +75,11 @@ class Dom {
 
   removeClass(className) {
     this.$el.classList.remove(className)
+    return this
+  }
+
+  remove() {
+    this.$el.remove()
     return this
   }
 }

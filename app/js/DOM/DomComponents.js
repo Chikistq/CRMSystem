@@ -10,33 +10,50 @@ export class DomComponents {
     this.$selector = $(options.selector)
     this.componets = options.components || []
     this.data = options.data || []
-    this.listeners = ['click'] || []
   }
 
+  listeners() {
+    const link = document.querySelectorAll('.a-link')
 
-  /* добавить слушатели событий.  */
-  addEvents() {
-
+    link.forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.preventDefault()
+      })
+    })
   }
-
-
 
 
   init() {
     this.$selector.html(preloader)
 
-    setTimeout(() => {
-      $('.table__wrap-preload').removeClass('active')
+    // setTimeout(() => {
+    //   $('.table__wrap-preload').removeClass('active')
+    //
+    //   this.componets = this.componets.map(Component => {
+    //     const component = new Component(this.data)
+    //     this.$selector.append(component.render())
+    //
+    //     if (component.name === 'Table') {
+    //       showRow(this.data)
+    //     }
+    //     return component
+    //   })
+    //
+    // }, 1500)
 
-      this.componets.forEach(Comment => {
-        const component = new Comment(this.data)
-        this.$selector.append(component.render())
+    $('.table__wrap-preload').removeClass('active')
 
-        if (component.name === 'Table') {
-          showRow(this.data)
-        }
-      })
+    this.componets = this.componets.map(Component => {
+      const component = new Component(this.data)
+      this.$selector.append(component.render())
 
-    }, 1500)
+      if (component.name === 'Table') {
+        showRow(this.data)
+      }
+      return component
+    })
+
+    this.componets.forEach(component => component.listeners())
+
   }
 }
