@@ -1,6 +1,5 @@
 import {$} from '@/js/DOM/dom';
 import Choices from 'choices.js';
-import tippy from 'tippy.js';
 
 function addContact() {
   const contact = `
@@ -24,6 +23,7 @@ function addContact() {
             </button>
           </div>
 `
+
   const linkAdd = $('.link-add')
 
 
@@ -45,14 +45,14 @@ function addContact() {
     }
 
     Array.from(document.querySelectorAll('.btn-delete')).map((item, value) => {
-      item.addEventListener('click', (e) => {
+      item.addEventListener('click', () => {
         items[value].remove()
       })
     })
   })
 
   Array.from(document.querySelectorAll('.btn-delete')).map((item, value) => {
-    item.addEventListener('click', (e) => {
+    item.addEventListener('click', () => {
       items[value].remove()
     })
   })
@@ -88,7 +88,7 @@ function fillContacts(type, value) {
   linkAdd.appendHtml('beforebegin', cont(value))
 
   const arr = document.querySelectorAll('.form__contacts-items')
-  Array.from(arr[arr.length-1].firstElementChild.options).find(item => item.value == type).selected = true
+  Array.from(arr[arr.length-1].firstElementChild.options).find(item => item.value === type).selected = true
 }
 
 
@@ -118,12 +118,12 @@ const newUser = `
         </div>
 
         <div class="form__contacts form__contacts-pd25">
-          <a class="form__link link link-add" href="\\">Добавить контакт</a>
+          <a class="form__link link link-add" href="/">Добавить контакт</a>
         </div>
       </form>
 
       <button class="form__btn btn btn-primary" >Сохранить</button>
-      <a class="form__link link-cancel" href="\\">Отмена</a>
+      <a class="form__link link-cancel" href="/">Отмена</a>
 
     </div>
 `
@@ -176,7 +176,7 @@ const deleteUser = `
       <h2 class="modal___deleteUser-title h2-title">Новый клиент</h2>
       <p class="modal__deleteUser-descr">Вы действительно хотите удалить данного клиента?</p>
       <button class="modal__deleteUser-btn form__btn btn btn-primary" >Удалить</button>
-      <a class="modal__deleteUser-link link-cancel" href="\\">Отмена</a>
+      <a class="modal__deleteUser-link link-cancel" href="/">Отмена</a>
     </div>
 `
 
