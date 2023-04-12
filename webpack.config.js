@@ -341,6 +341,7 @@ createServer(async (req, res) => {
   .on('listening', () => {
     if (process.env.NODE_ENV !== 'test') {
       console.log(`Сервер CRM запущен. Вы можете использовать его по адресу http://localhost:${PORT}`);
+      console.log(`Webpack-dev-server запущен. Вы можете использовать его по адресу http://localhost:3001`);
       console.log('Нажмите CTRL+C, чтобы остановить сервер');
       console.log('Доступные методы:');
       console.log(`GET ${URI_PREFIX} - получить список клиентов, в query параметр search можно передать поисковый запрос`);
