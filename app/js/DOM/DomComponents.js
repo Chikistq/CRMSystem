@@ -1,19 +1,7 @@
-import {$} from '@/js/DOM/dom';
-import {preloader, showRow} from '@/js/DOM/_elements';
-import {Exchange} from '@/js/API/Exchange';
-import tippy from 'tippy.js';
-import 'tippy.js/dist/tippy.css';
-
-
-
-
-
-
 export class DomComponents {
   constructor(options = {}) {
-    this.$selector = $(options.selector)
+    this.selector = options.selector
     this.componets = options.components || []
-    this.exchange = new Exchange || []
   }
 
   listeners() {
@@ -27,34 +15,15 @@ export class DomComponents {
   }
 
 
-  async init() {
-    this.$selector.html(preloader)
+  init() {
 
-    await this.exchange.getData()
-    console.log(this.exchange)
-
-    if (this.exchange.response == '200') {
-      $('.table__wrap-preload').removeClass('active')
-
-      this.componets = this.componets.map(Component => {
-        const component = new Component(this.exchange.data)
-        this.$selector.append(component.render())
-
-        if (component.name === 'Table') {
-          showRow(this.exchange.data)
-        }
-        return component
-      })
-
-      this.componets.forEach(component => component.listeners())
-
-
-      tippy('[data-tippy-content]', {
-        theme: 'custom',
-      })
-    }
-
-
+    this.componets = this.componets.map(async Component => {
+      const component = new Component(this.selector)
+      await component.render()
+      component.listeners()
+      return component
+    })
 
   }
+
 }

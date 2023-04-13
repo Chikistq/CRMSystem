@@ -450,9 +450,10 @@
       font-size: 14px;
       line-height: 19px;
 
-      //opacity: 0;
-      //height: 0;
-      transition: all .5s ease-in;
+      opacity: 0;
+      height: 0;
+      display: none;
+      transition: all 1s ease-in;
 
       td {
         padding-top: 10px;
@@ -471,6 +472,9 @@
         .icon {
           margin-right: 7px;
           margin-bottom: 7px;
+          opacity: .7;
+          transition: opacity .2s ease-in;
+          outline: none;
         }
         //.icon:not(:last-child) {
         //  margin-right: 7px;
@@ -499,20 +503,6 @@
     }
   }
 
-  @keyframes show {
-    from {
-      opacity: 0;
-      height: 0;
-    }
-    to {
-      opacity: 1;
-      height: 100%;
-    }
-  }
-
-  .table__body-row.active {
-    animation: show .5s ease-in;
-  }
 /* table body end */
 
 

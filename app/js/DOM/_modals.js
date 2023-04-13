@@ -101,9 +101,9 @@ const newUser = `
       <form class="modal__newUser-form form" enctype="multipart/form-data" id="newUser" action="/" method="post">
 
         <div class="form__wrap">
-          <label class="form__label" for="lastName">
+          <label class="form__label" for="surname">
             <span class="visually-hidden">Введите фамилию</span>
-            <input class="form__input user-lastName" id="lastName" type="text" placeholder="Фамилия*" data-validate-field="lastName" name="user_lastName">
+            <input class="form__input user-surname" id="surname" type="text" placeholder="Фамилия*" data-validate-field="surname" name="user_surname">
           </label>
 
           <label class="form__label" for="name">
@@ -141,19 +141,19 @@ function changeUser(obj = {}) {
       </div>
       <form class="modal__changeUser-form form" enctype="multipart/form-data" id="changeUser" action="/" method="post">
         <div class="form__wrap">
-          <label class="form__label" for="changeLastName">
+          <label class="form__label" for="surname">
             <span class="">Фамилия*</span>
-            <input class="form__input user-lastName" id="changeLastName" type="text" placeholder="" data-validate-field="lastName" name="user_lastName" value="${obj.surname}">
+            <input class="form__input user-surname" id="surname" type="text" placeholder="" data-validate-field="surname" name="user_surname" value="${obj.surname}">
           </label>
 
-          <label class="form__label" for="changeName">
+          <label class="form__label" for="name">
             <span class="">Имя*</span>
-            <input class="form__input user-name" id="changeName" type="text" placeholder="" data-validate-field="name" name="user_name" value="${obj.name}">
+            <input class="form__input user-name" id="name" type="text" placeholder="" data-validate-field="name" name="user_name" value="${obj.name}">
           </label>
 
-          <label class="form__label" for="changelastName">
+          <label class="form__label" for="lastName">
             <span class="">Отчество</span>
-            <input class="form__input user-lastName" id="changelastName" type="text" placeholder="" data-validate-field="lastName" name="user_lastName" value="${obj.lastName}">
+            <input class="form__input user-lastName" id="lastName" type="text" placeholder="" data-validate-field="lastName" name="user_lastName" value="${obj.lastName}">
           </label>
         </div>
 
@@ -172,8 +172,8 @@ function changeUser(obj = {}) {
 
 const deleteUser = `
     <div class="modal__deleteUser ">
-      <button class="modal__close"></button>
-      <h2 class="modal___deleteUser-title h2-title">Новый клиент</h2>
+      <button class="modal__close close"></button>
+      <h2 class="modal___deleteUser-title h2-title">Удалить клиента</h2>
       <p class="modal__deleteUser-descr">Вы действительно хотите удалить данного клиента?</p>
       <button class="modal__deleteUser-btn form__btn btn btn-primary" >Удалить</button>
       <a class="modal__deleteUser-link link-cancel" href="/">Отмена</a>
@@ -232,11 +232,11 @@ export function modals() {
       return $(modal)
 
     },
-    deleteUser(id) {
+    deleteUser() {
       modal.insertAdjacentHTML("beforeend", deleteUser)
       modal.classList.add('active')
       main.append(modal)
-
+      return $(modal)
     },
     close() {
       modal.classList.remove('active')

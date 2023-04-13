@@ -44,8 +44,8 @@ path {
 
 .form__link.link-cancel:hover,
 .form__link.link-cancel:focus,
-.link-cancel:hover,
-.link-cancel:focus {
+.modal__deleteUser-link.link-cancel:hover,
+.modal__deleteUser-link.link-cancel:focus {
   border-bottom: 1px solid $delete-color;
 }
 
@@ -61,7 +61,7 @@ path {
   background-color: $grey-border;
 }
 
-
+.modal__deleteUser-link.link-cancel:active,
 .form__link.link-cancel:active,
 .link-cancel:active {
   border-bottom: 1px solid $delete-color;
@@ -130,6 +130,11 @@ path {
 .action__delete:hover,
 .action__delete:focus {
   color: $delete-color;
+}
+
+.icon.tooltip:hover,
+.icon.tooltip:focus {
+  opacity: 1;
 }
 
 //.spinner{

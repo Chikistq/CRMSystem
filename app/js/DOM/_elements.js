@@ -4,15 +4,6 @@ export const preloader = `
      </svg>`
 
 
-
-export function showRow(cl) {
-  cl.forEach(client => {
-    const row = document.querySelector(`[data-id="${client.id}"]`)
-    row.classList.add('active')
-  })
-
-}
-
 export function getUserData() {
   const newUser = {}
   newUser.contacts = []
