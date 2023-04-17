@@ -5,6 +5,7 @@ export class Exchange {
     this.url = 'http://localhost:3000/api/clients'
     this.response = ''
     this.data = []
+    this.errorMss = ''
   }
 
   async getData() {
@@ -60,8 +61,16 @@ async function createNewCl(obj, url) {
     })
   });
 
-  this.response = response.status
+  if (response.status === 422) {
+    const mess = await response.json()
+    let messDone = ''
+    mess.errors.forEach(obj => {
+      messDone += obj.message + '. '
+    })
+    this.errorMss = messDone
+  }
 
+  this.response = response.status
 }
 
 async function changeCl(obj, id) {
@@ -86,6 +95,15 @@ async function changeCl(obj, id) {
   })
 
   this.response = response.status
+
+  if (response.status === 422) {
+    const mess = await response.json()
+    let messDone = ''
+    mess.errors.forEach(obj => {
+      messDone += obj.message + '. '
+    })
+    this.errorMss = messDone
+  }
 
 }
 

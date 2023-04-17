@@ -2,7 +2,7 @@ import {$} from '@/js/DOM/dom'
 import {generateRow} from '@/js/DOM/createTable'
 import {DomComponents} from '@/js/DOM/DomComponents'
 import {modals} from '@/js/DOM/_modals'
-import {getUserData, preloader} from '@/js/DOM/_elements'
+import {errorMess, getUserData, preloader} from '@/js/DOM/_elements'
 import {Exchange} from '@/js/API/Exchange'
 import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
@@ -56,7 +56,7 @@ export class Table extends DomComponents {
     /* Add new Client */
     const newClbtn = $('.main__addbtn')
     function addModal() {
-      const newClform = modals()
+      const newClform = modals(this.exchange)
       newClform.newUser().on('click', (e) => {
         e.preventDefault()
         if (e.target == $('.modal__close').$el || e.target == $('.link-cancel').$el || e.target == $('.main__modal').$el) newClform.close()
@@ -64,14 +64,20 @@ export class Table extends DomComponents {
         if (e.target == $('.btn-primary').$el) {
           (async () => {
             await this.exchange.create(getUserData())
-            // добавить сообщение для пользователя, в соответствии со статусом ответа - ошибка или успешная запись(+валидацию)
             if (this.exchange.response === 200 || this.exchange.response === 201) {
+
+              errorMess(e.target, this.exchange)
+
               await this.exchange.getData()
-              newClform.close()
+              setTimeout(() => {
+                newClform.close()
+              }, 500)
               await this.getTable()
 
               // перезапуск обработчиков после отрисовки таблицы
               await this.listeners()
+            } else {
+              errorMess(e.target, this.exchange)
             }
           })()
         }
@@ -108,8 +114,11 @@ export class Table extends DomComponents {
             await this.exchange.change(getUserData(), client.id)
             // добавить сообщение для пользователя, в соответствии со статусом ответа - ошибка или успешная запись
             if (this.exchange.response === 200 || this.exchange.response === 201) {
+              errorMess(e.target, this.exchange)
               await this.exchange.getData()
-              changeForm.close()
+              setTimeout(() => {
+                changeForm.close()
+              }, 500)
               await this.getTable()
 
               // перезапуск обработчиков после отрисовки раблицы
@@ -117,6 +126,8 @@ export class Table extends DomComponents {
                 link.removeEventListener('click', changeClient)
               })
               await this.listeners()
+            } else {
+              errorMess(e.target, this.exchange)
             }
           })()
         }
@@ -139,8 +150,11 @@ export class Table extends DomComponents {
                 await this.exchange.delete(id)
                 // добавить сообщение для пользователя, в соответствии со статусом ответа - ошибка или успешная запись
                 if (this.exchange.response === 200 || this.exchange.response === 201) {
+                  errorMess(e.target, this.exchange)
                   await this.exchange.getData()
-                  changeForm.close()
+                  setTimeout(() => {
+                    changeForm.close()
+                  }, 500)
                   await this.getTable()
 
 
@@ -149,6 +163,8 @@ export class Table extends DomComponents {
                     link.removeEventListener('click', changeClient)
                   })
                   await this.listeners()
+                } else {
+                  errorMess(e.target, this.exchange)
                 }
               })()
             }
@@ -182,11 +198,12 @@ export class Table extends DomComponents {
 
           (async () => {
             await this.exchange.delete(id)
-            if (this.exchange.response === 404) console.log('Не удалось удалить студента, так как его не существует')
-            // добавить сообщение для пользователя, в соответствии со статусом ответа - ошибка или успешная запись
             if (this.exchange.response === 200 || this.exchange.response === 201) {
+              errorMess(e.target, this.exchange)
               await this.exchange.getData()
-              deleteForm.close()
+              setTimeout(() => {
+                deleteForm.close()
+              }, 500)
               await this.getTable()
 
               // перезапуск обработчиков после отрисовки таблицы
@@ -194,7 +211,8 @@ export class Table extends DomComponents {
                 link.removeEventListener('click', deleteCl)
               })
               await this.listeners()
-
+            } else {
+              errorMess(e.target, this.exchange)
             }
           })()
         }

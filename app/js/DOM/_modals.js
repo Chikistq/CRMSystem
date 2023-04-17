@@ -181,6 +181,10 @@ const deleteUser = `
 
 
 
+
+
+
+
 function reloadChoices(destroy) {
   /* Choices */
   const element = document.querySelectorAll('.item__select');

@@ -354,6 +354,17 @@
     }
   }
 
+  .modal__errorMess {
+    max-width: 255px;
+    align-self: center;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 400;
+    color: $delete-color;
+    margin-bottom: 9px;
+    margin-top: -16px;
+  }
+
 }
 
 .table {
