@@ -338,6 +338,35 @@
         line-height: 19px;
       }
     }
+
+    &__newUser,
+    &__changeUser,
+    &__deleteUser {
+      opacity: 0;
+    }
+
+    &__newUser.active,
+    &__changeUser.active,
+    &__deleteUser.active {
+      animation: open .2s ease-in;
+      opacity: 1;
+    }
+
+  }
+
+  @keyframes open {
+    0% {
+      opacity: 0;
+      transform: scale(.5);
+    }
+    90% {
+      transform: scale(1.1);
+    }
+
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
   .modal.active {

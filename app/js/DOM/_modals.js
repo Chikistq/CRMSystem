@@ -214,6 +214,8 @@ export function modals() {
       modal.insertAdjacentHTML("beforeend", newUser)
       modal.classList.add('active')
       main.append(modal)
+      modal.firstElementChild.classList.add('active')
+
 
       addContact()
 
@@ -224,6 +226,8 @@ export function modals() {
       modal.insertAdjacentHTML("beforeend", changeUser(obj))
       modal.classList.add('active')
       main.append(modal)
+      modal.firstElementChild.classList.add('active')
+
 
       if (obj.contacts.length > 0) {
         obj.contacts.forEach(item => {
@@ -239,6 +243,7 @@ export function modals() {
       modal.insertAdjacentHTML("beforeend", deleteUser)
       modal.classList.add('active')
       main.append(modal)
+      modal.firstElementChild.classList.add('active')
       return $(modal)
     },
     close() {
