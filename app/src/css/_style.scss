@@ -422,16 +422,22 @@
     &-id {
       white-space: nowrap;
       color: $accent-color;
+      cursor: pointer;
     }
     &-name {
+      cursor: pointer;
       span {
         font-weight: 600;
         font-size: 10px;
         color: $accent-color;
       }
     }
-    &-create {}
-    &-change {}
+    &-create {
+      cursor: pointer;
+    }
+    &-change {
+      cursor: pointer;
+    }
     &-contacts {}
     &-action {}
   }

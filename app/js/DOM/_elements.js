@@ -50,3 +50,29 @@ export function errorMess(eTarget, obj) {
 
   if (obj.response === 200 || obj.response === 201) $('.modal__errorMess').$el.style.color = 'green'
 }
+
+
+export function sorting(data, eTarget = 'id') {
+  const arr = data
+  if (eTarget === 'id') arr.sort((prev, next) => prev[eTarget] - next[eTarget])
+  if (eTarget === 'name') {
+    arr.sort((prev, next) => {
+      if (prev['surname'].trim().toLowerCase() + prev['name'].trim().toLowerCase() < next['surname'].trim().toLowerCase() + next['name'].trim().toLowerCase()) return -1
+      if (prev['surname'].trim().toLowerCase() + prev['name'].trim().toLowerCase() < next['surname'].trim().toLowerCase() + next['name'].trim().toLowerCase()) return 1
+    })
+  }
+  if (eTarget === 'create') {
+    arr.sort((prev, next) => {
+      if (prev['createdAt'] < next['createdAt']) return -1
+      if (prev['createdAt'] < next['createdAt']) return 1
+    })
+  }
+  if (eTarget === 'change') {
+    arr.sort((prev, next) => {
+      if (prev['updatedAt'] < next['updatedAt']) return -1
+      if (prev['updatedAt'] < next['updatedAt']) return 1
+    })
+  }
+
+  return arr
+}

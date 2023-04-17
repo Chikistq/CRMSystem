@@ -2,7 +2,7 @@ import {$} from '@/js/DOM/dom'
 import {generateRow} from '@/js/DOM/createTable'
 import {DomComponents} from '@/js/DOM/DomComponents'
 import {modals} from '@/js/DOM/_modals'
-import {errorMess, getUserData, preloader} from '@/js/DOM/_elements'
+import {errorMess, getUserData, preloader, sorting} from '@/js/DOM/_elements'
 import {Exchange} from '@/js/API/Exchange'
 import tippy from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
@@ -20,7 +20,7 @@ export class Table extends DomComponents {
   }
 
 
-  getTable() {
+  getTable(data) {
     this.$selector.html(preloader)
 
     const table = document.createElement('table')
@@ -29,11 +29,10 @@ export class Table extends DomComponents {
     tableBody.classList.add('table__body')
     table.append(tableBody)
 
-
     if (this.exchange.response == '200' || this.exchange.response == '201') {
       $('.table__wrap-preload').removeClass('active')
       this.$selector.append(table)
-      this.exchange.data.forEach(client => {
+      data.forEach(client => {
         const row = generateRow(client)
         tableBody.append(row)
         row.style.display = 'flex'
@@ -55,6 +54,7 @@ export class Table extends DomComponents {
 
     /* Add new Client */
     const newClbtn = $('.main__addbtn')
+
     function addModal() {
       const newClform = modals(this.exchange)
       newClform.newUser().on('click', (e) => {
@@ -83,6 +83,7 @@ export class Table extends DomComponents {
         }
       })
     }
+
     const addNewClient = addModal.bind(this)
 
     // обработчик повешен намеренно в таком виде, чтобы после повторных отрисовок
@@ -98,7 +99,7 @@ export class Table extends DomComponents {
       e.preventDefault()
       const changeForm = modals()
       const id = e.target.dataset.rowid
-      const client = this.exchange.data.find(item => item.id == id )
+      const client = this.exchange.data.find(item => item.id == id)
 
       changeForm.changeUser(client).on('click', (e) => {
         e.preventDefault()
@@ -225,13 +226,48 @@ export class Table extends DomComponents {
       link.addEventListener('click', deleteCl)
     })
     /* delete Client end */
+
+
+
+    /* sorting */
+    const sortBtns = document.querySelectorAll('.sort-title')
+
+    function sort(e) {
+      const sortTd = e.target.dataset.type
+
+      /* повернуть стрелку и массив */
+      const arr = Array.from(e.currentTarget.childNodes)
+      let dataArr = sorting(this.exchange.data, sortTd)
+      arr.find(item => {
+        if (item?.classList?.contains('sort-array')) {
+          if (sortTd === 'id') {
+            item.style.transform === 'rotate(180deg)' ? item.style.transform = 'rotate(0deg)' : item.style.transform = 'rotate(180deg)'
+            item.style.transform === 'rotate(0deg)' ? dataArr : dataArr = dataArr.reverse()
+          }
+          if (sortTd === 'name' || sortTd === 'create' || sortTd === 'change') {
+            console.log(item)
+            item.style.transform === 'rotate(0deg)' ? item.style.transform = 'rotate(180deg)' : item.style.transform = 'rotate(0deg)'
+            item.style.transform === 'rotate(0deg)' ? dataArr : dataArr = dataArr.reverse()
+          }
+        }
+      })
+
+      this.getTable(dataArr)
+      sortBtns.forEach(btn => btn.removeEventListener('click', bindSort))
+      this.listeners()
+    }
+
+    const bindSort = sort.bind(this)
+    sortBtns.forEach(btn => btn.addEventListener('click', bindSort))
+    /* sorting end */
+
   }
 
 
   async render() {
   //  Рендринг таблицы
     await this.exchange.getData()
-    this.getTable()
+    this.getTable(sorting(this.exchange.data))
     return this
 
   }

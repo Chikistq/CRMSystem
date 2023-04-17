@@ -162,6 +162,14 @@ path {
 }
 
 
+.table__title-id:hover,
+.table__title-name:hover,
+.table__title-create:hover,
+.table__title-change:hover {
+  color: #333;
+  transition: color .3s ease-in;
+}
+
 
 
 

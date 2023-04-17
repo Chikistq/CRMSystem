@@ -32,7 +32,7 @@ export function generateRow(obj) {
       <td class="table__body-row-create col col-4-5">${getData(obj.createdAt)} <span class="time">${getTime(obj.createdAt)}</span></td>
      `
   const updatedAt = `
-      <td class="table__body-row-change col col-4">${getData(obj.updatedAt)} <span class="time">${getTime(obj.createdAt)}</span></td>
+      <td class="table__body-row-change col col-4">${getData(obj.updatedAt)} <span class="time">${getTime(obj.updatedAt)}</span></td>
      `
 
 
@@ -80,13 +80,13 @@ function getData(objDate) {
 
 function getTime(objDate) {
   const data = new Date(objDate)
+  let h = data.getHours()
   let m = data.getMinutes()
-  let s = data.getSeconds()
+  if (h < 10) {
+    h = '0' + h
+  }
   if (m < 10) {
     m = '0' + m
   }
-  if (s < 10) {
-    s = '0' + s
-  }
-  return m + ':' + s
+  return h + ':' + m
 }
