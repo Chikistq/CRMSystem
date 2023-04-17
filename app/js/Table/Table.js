@@ -1,10 +1,11 @@
-import {$} from '@/js/DOM/dom';
-import {generateRow} from '@/js/DOM/createTable';
-import {DomComponents} from '@/js/DOM/DomComponents';
-import {modals} from '@/js/DOM/_modals';
-import {getUserData, preloader} from '@/js/DOM/_elements';
-import {Exchange} from '@/js/API/Exchange';
-import tippy from 'tippy.js';
+import {$} from '@/js/DOM/dom'
+import {generateRow} from '@/js/DOM/createTable'
+import {DomComponents} from '@/js/DOM/DomComponents'
+import {modals} from '@/js/DOM/_modals'
+import {getUserData, preloader} from '@/js/DOM/_elements'
+import {Exchange} from '@/js/API/Exchange'
+import tippy from 'tippy.js'
+import 'tippy.js/dist/tippy.css'
 
 
 
@@ -35,7 +36,7 @@ export class Table extends DomComponents {
       this.exchange.data.forEach(client => {
         const row = generateRow(client)
         tableBody.append(row)
-        row.style.display = 'block'
+        row.style.display = 'flex'
         setTimeout(() => {
           row.style.opacity = '1';
           row.style.height = "100%";
@@ -53,7 +54,8 @@ export class Table extends DomComponents {
     super.listeners()
 
     /* Add new Client */
-    $('.main__addbtn').on('click', () => {
+    const newClbtn = $('.main__addbtn')
+    function addModal() {
       const newClform = modals()
       newClform.newUser().on('click', (e) => {
         e.preventDefault()
@@ -62,108 +64,147 @@ export class Table extends DomComponents {
         if (e.target == $('.btn-primary').$el) {
           (async () => {
             await this.exchange.create(getUserData())
-            // добавить сообщение для пользователя, в соответствии со статусом ответа - ошибка или успешная запись
-            if (this.exchange.response == '200' || this.exchange.response == '201') {
+            // добавить сообщение для пользователя, в соответствии со статусом ответа - ошибка или успешная запись(+валидацию)
+            if (this.exchange.response === 200 || this.exchange.response === 201) {
               await this.exchange.getData()
               newClform.close()
               await this.getTable()
+
+              // перезапуск обработчиков после отрисовки таблицы
               await this.listeners()
             }
           })()
         }
       })
-    })
+    }
+    const addNewClient = addModal.bind(this)
+
+    // обработчик повешен намеренно в таком виде, чтобы после повторных отрисовок
+    // таблицы(после изменений) не задваивались\затраивались... EventListener на
+    // кнопке "Добавить клиента"
+    newClbtn.$el.onclick = addNewClient
+
     /* Add new Client end */
 
     /* change Client */
-    document.querySelectorAll('.action__change').forEach(link => {
-      link.addEventListener('click', (e) => {
+    const changeClBtns = document.querySelectorAll('.action__change')
+    let changeClient = function(e) {
+      e.preventDefault()
+      const changeForm = modals()
+      const id = e.target.dataset.rowid
+      const client = this.exchange.data.find(item => item.id == id )
+
+      changeForm.changeUser(client).on('click', (e) => {
         e.preventDefault()
-        const changeForm = modals()
-        const id = e.target.dataset.rowid
-        const client = this.exchange.data.find(item => item.id == id )
 
-        changeForm.changeUser(client).on('click', (e) => {
-          e.preventDefault()
+        if ($('.modal').$el.children.length === 1) {
+          if (e.target == $('.modal__close').$el || e.target == $('.main__modal').$el) changeForm.close()
 
-          if ($('.modal').$el.children.length === 1) {
-            if (e.target == $('.modal__close').$el || e.target == $('.main__modal').$el) changeForm.close()
-          }
+        }
 
-          if (e.target == $('.btn-primary').$el) {
+        if (e.target == $('.btn-primary').$el) {
 
-            (async () => {
-              await this.exchange.change(getUserData(), client.id)
-              // добавить сообщение для пользователя, в соответствии со статусом ответа - ошибка или успешная запись
-              if (this.exchange.response == '200' || this.exchange.response == '201') {
-                await this.exchange.getData()
-                changeForm.close()
-                await this.getTable()
-                await this.listeners()
-              }
-            })()
-          }
+          (async () => {
+            await this.exchange.change(getUserData(), client.id)
+            // добавить сообщение для пользователя, в соответствии со статусом ответа - ошибка или успешная запись
+            if (this.exchange.response === 200 || this.exchange.response === 201) {
+              await this.exchange.getData()
+              changeForm.close()
+              await this.getTable()
 
-          if (e.target == $('.link-cancel').$el) {
-            const formActive = $('.modal__changeUser')
-            formActive.css({display: 'none'})
+              // перезапуск обработчиков после отрисовки раблицы
+              changeClBtns.forEach(link => {
+                link.removeEventListener('click', changeClient)
+              })
+              await this.listeners()
+            }
+          })()
+        }
 
-            const newForm = changeForm.deleteUser()
-            newForm.on('click', (e) => {
-              e.preventDefault()
+        if (e.target == $('.link-cancel').$el) {
+          const formActive = $('.modal__changeUser')
+          formActive.css({display: 'none'})
 
-              if (e.target == $('.close').$el || e.target == $('.modal__deleteUser-link.link-cancel').$el) {
-                $('.modal__deleteUser').remove()
-                formActive.css({display: 'flex'})
-              }
+          const newForm = changeForm.deleteUser()
+          newForm.on('click', (e) => {
+            e.preventDefault()
 
-              if (e.target == $('.modal__deleteUser-btn').$el) {
-                (async () => {
-                  await this.exchange.delete(id)
-                  // добавить сообщение для пользователя, в соответствии со статусом ответа - ошибка или успешная запись
-                  if (this.exchange.response == '200' || this.exchange.response == '201') {
-                    await this.exchange.getData()
-                    changeForm.close()
-                    await this.getTable()
-                    await this.listeners()
-                  }
-                })()
-              }
-            })
-          }
-        })
+            if (e.target == $('.close').$el || e.target == $('.modal__deleteUser-link.link-cancel').$el) {
+              $('.modal__deleteUser').remove()
+              formActive.css({display: 'flex'})
+            }
+
+            if (e.target == $('.modal__deleteUser-btn').$el) {
+              (async () => {
+                await this.exchange.delete(id)
+                // добавить сообщение для пользователя, в соответствии со статусом ответа - ошибка или успешная запись
+                if (this.exchange.response === 200 || this.exchange.response === 201) {
+                  await this.exchange.getData()
+                  changeForm.close()
+                  await this.getTable()
+
+
+                  // перезапуск обработчиков после отрисовки раблицы
+                  changeClBtns.forEach(link => {
+                    link.removeEventListener('click', changeClient)
+                  })
+                  await this.listeners()
+                }
+              })()
+            }
+          })
+        }
+
       })
+    }
+    changeClient = changeClient.bind(this)
+
+    changeClBtns.forEach(link => {
+      link.addEventListener('click', changeClient)
     })
     /* change Client  end */
 
     /* delete Client */
-    document.querySelectorAll('.action__delete').forEach(link => {
-      link.addEventListener('click', (e) => {
+    const deleteBtns = document.querySelectorAll('.action__delete')
+    let deleteCl = function(e) {
+      e.preventDefault()
+      const deleteForm = modals()
+      const id = e.target.dataset.rowid
+
+
+      deleteForm.deleteUser().on('click', (e) => {
         e.preventDefault()
-        const deleteForm = modals()
-        const id = e.target.dataset.rowid
+        console.log('проверка')
 
+        if (e.target == $('.modal__close').$el || e.target == $('.main__modal').$el || e.target == $('.link-cancel').$el) deleteForm.close()
 
-        deleteForm.deleteUser().on('click', (e) => {
-          e.preventDefault()
+        if (e.target == $('.btn-primary').$el) {
 
-          if (e.target == $('.modal__close').$el || e.target == $('.main__modal').$el || e.target == $('.link-cancel').$el) deleteForm.close()
+          (async () => {
+            await this.exchange.delete(id)
+            if (this.exchange.response === 404) console.log('Не удалось удалить студента, так как его не существует')
+            // добавить сообщение для пользователя, в соответствии со статусом ответа - ошибка или успешная запись
+            if (this.exchange.response === 200 || this.exchange.response === 201) {
+              await this.exchange.getData()
+              deleteForm.close()
+              await this.getTable()
 
-          if (e.target == $('.btn-primary').$el) {
+              // перезапуск обработчиков после отрисовки таблицы
+              deleteBtns.forEach(link => {
+                link.removeEventListener('click', deleteCl)
+              })
+              await this.listeners()
 
-            (async () => {
-              await this.exchange.delete(id)
-              // добавить сообщение для пользователя, в соответствии со статусом ответа - ошибка или успешная запись
-              if (this.exchange.response == '200' || this.exchange.response == '201') {
-                await this.exchange.getData()
-                deleteForm.close()
-                await this.getTable()
-                await this.listeners()
-              }
-            })()
-          }
-        })
+            }
+          })()
+        }
       })
+    }
+
+    deleteCl = deleteCl.bind(this)
+
+    deleteBtns.forEach(link => {
+      link.addEventListener('click', deleteCl)
     })
     /* delete Client end */
   }

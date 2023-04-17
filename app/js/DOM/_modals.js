@@ -1,5 +1,6 @@
 import {$} from '@/js/DOM/dom';
 import Choices from 'choices.js';
+import {getUserData} from '@/js/DOM/_elements';
 
 function addContact() {
   const contact = `
@@ -25,8 +26,6 @@ function addContact() {
 `
 
   const linkAdd = $('.link-add')
-
-
 
   const items = document.querySelectorAll('.item')
 
@@ -180,7 +179,9 @@ const deleteUser = `
     </div>
 `
 
-function reloadChoices() {
+
+
+function reloadChoices(destroy) {
   /* Choices */
   const element = document.querySelectorAll('.item__select');
   /* eslint-disable-next-line no-unused-vars */
@@ -195,10 +196,9 @@ function reloadChoices() {
       })
     })
   }
+
   /* Choices end */
-
 }
-
 
 export function modals() {
   const modal = document.createElement('div')
@@ -220,15 +220,14 @@ export function modals() {
       modal.insertAdjacentHTML("beforeend", changeUser(obj))
       modal.classList.add('active')
       main.append(modal)
-      reloadChoices()
 
       if (obj.contacts.length > 0) {
         obj.contacts.forEach(item => {
           fillContacts(item.type, item.value)
         })
-        reloadChoices()
       }
       addContact()
+      reloadChoices()
       return $(modal)
 
     },

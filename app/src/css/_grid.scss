@@ -1,8 +1,8 @@
-$grid-gutter-width: 20;
-$grid-gutter-width2: 20px;
-$max-width: 1186;
-$columns: 28;
-$size: $max-width / $columns;
+//$grid-gutter-width: 20;
+//$grid-gutter-width2: 20px;
+//$max-width: 1186;
+//$columns: 28;
+//$size: $max-width / $columns;
 
 
 .container {
@@ -41,61 +41,62 @@ $size: $max-width / $columns;
 
 .col-2 {
   flex: 0 0 auto;
-  max-width: percentage(($size)*2/$max-width)
-  //max-width: calc((var(--size))*2/var(--max-width));
+  //max-width: percentage(($size)*2/$max-width)
+  //max-width: percentage(($size)*2/$max-width)
+  max-width: calc((var(--size))*2/var(--max-width) * 100%);
 }
 
 .col-8-5 {
   flex: 0 0 auto;
-  //max-width: percentage(($size)*8.5/$max-width);
-  max-width: percentage($size*8.5/$max-width);
+  max-width: calc((var(--size))*8.5/var(--max-width) * 100%);
+  //max-width: percentage($size*8.5/$max-width);
 }
 
 .col-4-5 {
   flex: 0 0 auto;
-  max-width: percentage(($size)*4.5/$max-width);
-  //max-width: calc((var(--size))*4.5/var(--max-width));
+  //max-width: percentage(($size)*4.5/$max-width);
+  max-width: calc((var(--size))*4.5/var(--max-width) * 100%);
 }
 
 .col-4 {
   flex: 0 0 auto;
-  max-width: percentage(($size)*4/$max-width);
-  //max-width: calc((var(--size))*4/var(--max-width));
+  //max-width: percentage(($size)*4/$max-width);
+  max-width: calc((var(--size))*4/var(--max-width) * 100%);
 }
 
 .col-5 {
   flex: 0 0 auto;
-  max-width: percentage(($size)*5/$max-width);
-  //max-width: calc((var(--size))*5/var(--max-width));
+  //max-width: percentage(($size)*5/$max-width);
+  max-width: calc((var(--size))*5/var(--max-width) * 100%);
 }
 
 
 @media only screen and (max-width : 1280px) {
   .col-8-5 {
-    max-width: percentage(($size)*8/$max-width);
-    //max-width: calc((var(--size))*8/var(--max-width));
+    //max-width: percentage(($size)*8/$max-width);
+    max-width: calc((var(--size))*8/var(--max-width) * 100%);
   }
 
   .col-5 {
-    max-width: percentage(($size)*5.5/$max-width);
-    //max-width: calc((var(--size))*5.5/var(--max-width));
+    //max-width: percentage(($size)*5.5/$max-width);
+    max-width: calc((var(--size))*5.5/var(--max-width) * 100%);
   }
 }
 
 
 @media only screen and (max-width : 998px) {
   .col-4-5 {
-    max-width: percentage(($size)*4/$max-width);
-    //max-width: calc((var(--size))*4/var(--max-width));
+    //max-width: percentage(($size)*4/$max-width);
+    max-width: calc((var(--size))*4/var(--max-width) * 100%);
   }
 
   .col-2 {
-    max-width: percentage(($size)*3/$max-width);
-    //max-width: calc((var(--size))*3/var(--max-width));
+    //max-width: percentage(($size)*3/$max-width);
+    max-width: calc((var(--size))*3/var(--max-width) * 100%);
   }
 
   .col-5 {
-    max-width: percentage(($size)*5/$max-width);
-    //max-width: calc((var(--size))*5/var(--max-width));
+    //max-width: percentage(($size)*5/$max-width);
+    max-width: calc((var(--size))*5/var(--max-width) * 100%);
   }
 };

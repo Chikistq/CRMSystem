@@ -16,19 +16,18 @@ export class Exchange {
     const response = await fetch(`${this.url}/${id}`, {
       method: 'DELETE',
     })
-    if (response.status === 404) console.log('Не удалось удалить студента, так как его не существует')
+
   }
 
   async create(obj) {
-    await createNewCl(obj, this.url)
-    await this.getData()
+    const create = createNewCl.bind(this)
+    await create(obj, this.url)
 
-    // this.response = (await createNewCl(obj, this.url))
   }
 
   async change(obj, id) {
-    await changeCl(obj, id)
-    await this.getData()
+    const change = changeCl.bind(this)
+    await change(obj, id)
   }
 
 
@@ -61,6 +60,8 @@ async function createNewCl(obj, url) {
     })
   });
 
+  this.response = response.status
+
 }
 
 async function changeCl(obj, id) {
@@ -82,8 +83,9 @@ async function changeCl(obj, id) {
       surname: obj.surname,
       contacts: arr
     })
-  });
-  console.log('отправленный объект', await response.json())
+  })
+
+  this.response = response.status
 
 }
 

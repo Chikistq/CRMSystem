@@ -55,7 +55,7 @@ function getContact(obj =[]) {
   td.classList.add('col')
   td.classList.add('col-4')
   obj.contacts.forEach(item => {
-    const icon = contactIcon(item.value)[item.type]
+    const icon = contactIcon(item.type, item.value)[item.type]
     td.insertAdjacentHTML("beforeend", icon)
   })
 
