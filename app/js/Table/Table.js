@@ -72,7 +72,7 @@ export class Table extends DomComponents {
               setTimeout(() => {
                 newClform.close()
               }, 500)
-              await this.getTable()
+              await this.getTable(this.exchange.data)
 
               // перезапуск обработчиков после отрисовки таблицы
               await this.listeners()
@@ -232,11 +232,12 @@ export class Table extends DomComponents {
     /* sorting */
     const sortBtns = document.querySelectorAll('.sort-title')
 
-    function sort(e) {
+    async function sort(e) {
       const sortTd = e.target.dataset.type
 
       /* повернуть стрелку и массив */
       const arr = Array.from(e.currentTarget.childNodes)
+      await this.exchange.getData()
       let dataArr = sorting(this.exchange.data, sortTd)
       arr.find(item => {
         if (item?.classList?.contains('sort-array')) {
@@ -245,7 +246,6 @@ export class Table extends DomComponents {
             item.style.transform === 'rotate(0deg)' ? dataArr : dataArr = dataArr.reverse()
           }
           if (sortTd === 'name' || sortTd === 'create' || sortTd === 'change') {
-            console.log(item)
             item.style.transform === 'rotate(0deg)' ? item.style.transform = 'rotate(180deg)' : item.style.transform = 'rotate(0deg)'
             item.style.transform === 'rotate(0deg)' ? dataArr : dataArr = dataArr.reverse()
           }
@@ -253,12 +253,11 @@ export class Table extends DomComponents {
       })
 
       this.getTable(dataArr)
-      sortBtns.forEach(btn => btn.removeEventListener('click', bindSort))
       this.listeners()
     }
 
     const bindSort = sort.bind(this)
-    sortBtns.forEach(btn => btn.addEventListener('click', bindSort))
+    sortBtns.forEach(btn => btn.onclick = bindSort)
     /* sorting end */
 
   }
