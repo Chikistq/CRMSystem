@@ -30,12 +30,13 @@ module.exports = {
     }
   },
   /* отключил для куратора(сорс мап) */
-  // target: isDev ? 'web' : 'browserslist',
-  // devtool: isDev ? 'source-map' : false,
-  devtool: 'source-map',
+  target: isDev ? 'web' : 'browserslist',
+  devtool: isDev ? 'source-map' : false,
+  // devtool: 'source-map',
   optimization: {
     /* отключил для куратора(минификация = true) */
-    minimize: false
+    minimize: true
+    // minimize: false
   },
 
   devServer: {

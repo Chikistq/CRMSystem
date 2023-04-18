@@ -11,8 +11,3 @@ const crm = new DomComponents({
   components: [Table]
 })
 crm.init()
-
-
-
-
-
