@@ -76,3 +76,11 @@ export function sorting(data, eTarget = 'id') {
 
   return arr
 }
+
+
+export function searchRequest(input) {
+  const inputValue = input.value.trim().toLowerCase()
+
+
+
+}

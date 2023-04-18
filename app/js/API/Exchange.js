@@ -31,6 +31,11 @@ export class Exchange {
     await change(obj, id)
   }
 
+  async searchBd(req) {
+    const srch = searchCl.bind(this)
+    this.data = await srch(`${this.url}?search=${req}`)
+  }
+
 
 
 }
@@ -105,5 +110,15 @@ async function changeCl(obj, id) {
     this.errorMss = messDone
   }
 
+}
+
+async function searchCl(url) {
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {'Content-Type': 'application/json'},
+  })
+
+  const r = await response.json()
+  return r
 }
 

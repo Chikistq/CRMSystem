@@ -17,6 +17,7 @@ export class Table extends DomComponents {
     })
     this.$selector = $(selector)
     this.exchange = new Exchange || []
+    this.searchReq = ''
   }
 
 
@@ -116,11 +117,18 @@ export class Table extends DomComponents {
             // добавить сообщение для пользователя, в соответствии со статусом ответа - ошибка или успешная запись
             if (this.exchange.response === 200 || this.exchange.response === 201) {
               errorMess(e.target, this.exchange)
-              await this.exchange.getData()
+
+              if (this.searchReq) {
+                await this.exchange.searchBd(this.searchReq)
+              } else {
+                await this.exchange.getData()
+              }
+
               setTimeout(() => {
                 changeForm.close()
               }, 500)
-              await this.getTable()
+              await this.getTable(this.exchange.data)
+
 
               // перезапуск обработчиков после отрисовки раблицы
               changeClBtns.forEach(link => {
@@ -152,11 +160,19 @@ export class Table extends DomComponents {
                 // добавить сообщение для пользователя, в соответствии со статусом ответа - ошибка или успешная запись
                 if (this.exchange.response === 200 || this.exchange.response === 201) {
                   errorMess(e.target, this.exchange)
-                  await this.exchange.getData()
+
+                  if (this.searchReq) {
+                    await this.exchange.searchBd(this.searchReq)
+                  } else {
+                    await this.exchange.getData()
+                  }
+
                   setTimeout(() => {
                     changeForm.close()
                   }, 500)
-                  await this.getTable()
+
+                  await this.getTable(this.exchange.data)
+
 
 
                   // перезапуск обработчиков после отрисовки раблицы
@@ -201,11 +217,17 @@ export class Table extends DomComponents {
             await this.exchange.delete(id)
             if (this.exchange.response === 200 || this.exchange.response === 201) {
               errorMess(e.target, this.exchange)
-              await this.exchange.getData()
+
+              if (this.searchReq) {
+                await this.exchange.searchBd(this.searchReq)
+              } else {
+                await this.exchange.getData()
+              }
+
               setTimeout(() => {
                 deleteForm.close()
               }, 500)
-              await this.getTable()
+              await this.getTable(this.exchange.data)
 
               // перезапуск обработчиков после отрисовки таблицы
               deleteBtns.forEach(link => {
@@ -237,7 +259,11 @@ export class Table extends DomComponents {
 
       /* повернуть стрелку и массив */
       const arr = Array.from(e.currentTarget.childNodes)
-      await this.exchange.getData()
+      if (this.searchReq) {
+        await this.exchange.searchBd(this.searchReq)
+      } else {
+        await this.exchange.getData()
+      }
       let dataArr = sorting(this.exchange.data, sortTd)
       arr.find(item => {
         if (item?.classList?.contains('sort-array')) {
@@ -259,6 +285,26 @@ export class Table extends DomComponents {
     const bindSort = sort.bind(this)
     sortBtns.forEach(btn => btn.onclick = bindSort)
     /* sorting end */
+
+    /* search */
+    const input = $('#h-search')
+    let timer = null
+    function searchRequest(e) {
+      if (timer) clearTimeout(timer)
+      timer = setTimeout(async () => {
+        this.searchReq = e.target.value.trim().toLowerCase()
+        await this.exchange.searchBd(this.searchReq)
+        this.getTable(this.exchange.data)
+        this.listeners()
+
+      }, 300)
+    }
+    const searchClList = searchRequest.bind(this)
+
+    input.$el.onkeyup = searchClList
+
+    /* search end */
+
 
   }
 
