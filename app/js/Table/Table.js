@@ -30,7 +30,7 @@ export class Table extends DomComponents {
     tableBody.classList.add('table__body')
     table.append(tableBody)
 
-    if (this.exchange.response == '200' || this.exchange.response == '201') {
+    if (this.exchange.response === 200 || this.exchange.response === 201) {
       $('.table__wrap-preload').removeClass('active')
       this.$selector.append(table)
       data.forEach(client => {
@@ -46,7 +46,6 @@ export class Table extends DomComponents {
       tippy('[data-tippy-content]', {
         theme: 'custom',
       })
-
     }
   }
 
@@ -56,7 +55,7 @@ export class Table extends DomComponents {
     /* Add new Client */
     const newClbtn = $('.main__addbtn')
 
-    function addModal() {
+    let addNewClient = function() {
       const newClform = modals(this.exchange)
       newClform.newUser().on('click', (e) => {
         e.preventDefault()
@@ -85,7 +84,7 @@ export class Table extends DomComponents {
       })
     }
 
-    const addNewClient = addModal.bind(this)
+    addNewClient = addNewClient.bind(this)
 
     // обработчик повешен намеренно в таком виде, чтобы после повторных отрисовок
     // таблицы(после изменений) не задваивались\затраивались... EventListener на
@@ -100,7 +99,7 @@ export class Table extends DomComponents {
       e.preventDefault()
       const changeForm = modals()
       const id = e.target.dataset.rowid
-      const client = this.exchange.data.find(item => item.id == id)
+      const client = this.exchange.data.find(item => item.id === id)
 
       changeForm.changeUser(client).on('click', (e) => {
         e.preventDefault()
@@ -289,7 +288,7 @@ export class Table extends DomComponents {
     /* search */
     const input = $('#h-search')
     let timer = null
-    function searchRequest(e) {
+    let searchRequest = function(e) {
       if (timer) clearTimeout(timer)
       timer = setTimeout(async () => {
         this.searchReq = e.target.value.trim().toLowerCase()
@@ -299,9 +298,9 @@ export class Table extends DomComponents {
 
       }, 300)
     }
-    const searchClList = searchRequest.bind(this)
+    searchRequest = searchRequest.bind(this)
 
-    input.$el.onkeyup = searchClList
+    input.$el.onkeyup = searchRequest
 
     /* search end */
 

@@ -29,8 +29,15 @@ module.exports = {
       '@css': path.resolve(__dirname, 'app/src/css'),
     }
   },
-  target: isDev ? 'web' : 'browserslist',
-  devtool: isDev ? 'source-map' : false,
+  /* отключил для куратора(сорс мап) */
+  // target: isDev ? 'web' : 'browserslist',
+  // devtool: isDev ? 'source-map' : false,
+  devtool: 'source-map',
+  optimization: {
+    /* отключил для куратора(минификация = true) */
+    minimize: false
+  },
+
   devServer: {
     static: {
       directory: path.join(__dirname, 'dist'),
