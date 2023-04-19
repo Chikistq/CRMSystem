@@ -32,7 +32,6 @@ With [Yarn](https://yarnpkg.com/):
 ```zsh
 yarn add
 ```
-npm install
 * Для запуска
 ```zsh
 npm start
