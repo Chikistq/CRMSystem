@@ -145,6 +145,7 @@ export class Table extends DomComponents {
           formActive.css({display: 'none'})
 
           const newForm = changeForm.deleteUser()
+          newForm.$el.lastElementChild.classList.add('active')
           newForm.on('click', (e) => {
             e.preventDefault()
 
